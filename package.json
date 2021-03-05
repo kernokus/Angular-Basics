@@ -12,16 +12,24 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~11.2.3",
+    "@angular/cdk": "^11.2.2",
     "@angular/common": "~11.2.3",
     "@angular/compiler": "~11.2.3",
     "@angular/core": "~11.2.3",
     "@angular/forms": "~11.2.3",
+    "@angular/material": "^11.2.2",
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
+    "@ng-select/ng-select": "^6.1.0",
+    "angular1-apollo": "^0.3.0",
+    "apollo-angular": "^2.4.0",
+    "apollo-client": "^2.6.10",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.3"
+    "zone.js": "~0.11.3",
+    "@apollo/client": "^3.0.0",
+    "graphql": "^15.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.2",
