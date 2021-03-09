@@ -1,0 +1,61 @@
+<div id="sideBar">
+    <div id="sideBarContent">
+      <h1>Фильтры</h1>
+        <div class="container"> 
+        <div class="material-form-field">
+          <input [(ngModel)]="inputText" [style.border-bottom-color]="inputText ? '#347CFF':'#A5A5A5'"  type="text" required name="text" id="field-text"/>
+          <label class="material-form-field-label" for="field-text">Название</label>
+        </div>
+    </div>
+    <!-- multiset -->
+    
+  <form>
+    <div class="multiselect">
+      <div class="selectBox" (click)="showCheckboxes()">
+        <label id="multisetLabel" for="selectBox">Порт</label>
+        <select id="selectMulti" [style.border-bottom-color]="lenghtNums ? '#347CFF':'#A5A5A5'">
+          <option id="numsChoosen">Выбраны {{lenghtNums}}</option>
+        </select>
+        <div class="overSelect"></div>
+      </div>
+      <div id="checkboxes">
+        <label for="one">
+          <input type="checkbox" id="one" (click)="clickCheckBox(1)" />First checkbox</label>
+        <label for="two">
+          <input type="checkbox" id="two" (click)="clickCheckBox(2)" />Second checkbox</label>
+        <label for="three">
+          <input type="checkbox" id="three" (click)="clickCheckBox(3)" />Third checkbox</label>
+      </div>
+    </div>
+  </form>
+  <strong>Население</strong>
+  <!-- radioButton -->
+  <div class="radioButtons">
+    
+      <div class="md-radio">
+        <input id="1" (click)="clickRadioBtn(1)" type="radio" name="g" >
+        <label for="1">Более 100 млн.чел</label>
+      </div>
+      <div class="md-radio">
+        <input id="2" (click)="clickRadioBtn(2)" type="radio" name="g">
+        <label for="2">30-100 млн.чел</label>
+      </div>
+      <div class="md-radio">
+        <input id="3" (click)="clickRadioBtn(3)" type="radio" name="g">
+        <label for="3">10-30 млн.чел</label>
+      </div>
+      <div class="md-radio">
+        <input id="4" (click)="clickRadioBtn(4)" type="radio" name="g">
+        <label for="4">1-10 млн.чел</label>
+      </div>
+      <div class="md-radio">
+        <input id="5" (click)="clickRadioBtn(5)" type="radio" name="g">
+        <label for="5">Менее 1 млн.чел</label>
+      </div>
+    
+  </div>
+
+
+
+  </div>
+</div>

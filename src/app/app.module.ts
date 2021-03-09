@@ -18,12 +18,15 @@ import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
 import { CommonModule } from "@angular/common";
 
+import { LanguagePipe }  from 'src/app/language.pipe'
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
-    FormComponent //компоненты
+    FormComponent ,
+    LanguagePipe,//компоненты
   ],
   imports: [
     BrowserModule, //модули
@@ -41,7 +44,7 @@ import { CommonModule } from "@angular/common";
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://api.spacex.land/graphql/',
+            uri: 'https://countries-274616.ew.r.appspot.com/',
           }),
         };
       },

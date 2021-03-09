@@ -5,78 +5,25 @@
         SpaceX Ships
       </div>
           <app-card *ngFor="let item of tempArray"
-          [card]="item"
+          [country]="item"
+          [language]="item.officialLanguages|objInLanguage"
           > 
           
          </app-card>
       <dl>
-          <svg id="arrowL" (click)="prevPage()"[style.cursor]="isDisabledL ? 'default':'pointer'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path [style.fill]="isDisabledL ? '#3C474C':'#347CFF' "fill-rule="evenodd" clip-rule="evenodd" d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z" fill="#3C474C"/>
+          <svg id="arrowL" (click)="prevPage()"[style.cursor]="this.service.isDisabledL ? 'default':'pointer'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path [style.fill]="this.service.isDisabledL ? '#3C474C':'#347CFF' "fill-rule="evenodd" clip-rule="evenodd" d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z" fill="#3C474C"/>
           </svg>
-          <b id="counterPage">{{i}}</b>
-          <svg id="arrowR" (click)="nextPage()"[style.cursor]="isDisabledR ? 'default':'pointer'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.59 16.59L10 18L16 12L10 6L8.59 7.41L13.17 12L8.59 16.59Z" fill="#347CFF"/>
+          <b id="counterPage">{{this.service.i}}</b>
+          <svg id="arrowR" (click)="nextPage()"[style.cursor]="this.service.isDisabledR ? 'default':'pointer'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path [style.fill]="this.service.isDisabledR ? '#3C474C':'#347CFF' "fill-rule="evenodd" clip-rule="evenodd" d="M8.59 16.59L10 18L16 12L10 6L8.59 7.41L13.17 12L8.59 16.59Z" fill="#347CFF"/>
           </svg>
       </dl>
     
     </div>
-    <div id="sideBar">
-      <div id="sideBarContent">
-        <h1>Фильтры</h1>
-          <div class="container"> 
-          <div class="material-form-field">
-            <input [(ngModel)]="inputText" [style.border-bottom-color]="inputText ? '#347CFF':'#A5A5A5'"  type="text" required name="text" id="field-text"/>
-            <label class="material-form-field-label" for="field-text">Название</label>
-          </div>
-      </div>
-      <!-- multiset -->
-      
-    <form>
-      <div class="multiselect">
-        <div class="selectBox" (click)="showCheckboxes()">
-          <label id="multisetLabel" for="selectBox">Порт</label>
-          <select id="selectMulti" [style.border-bottom-color]="lenghtNums ? '#347CFF':'#A5A5A5'">
-            <option id="numsChoosen">Выбраны {{lenghtNums}}</option>
-          </select>
-          <div class="overSelect"></div>
-        </div>
-        <div id="checkboxes">
-          <label for="one">
-            <input type="checkbox" id="one" (click)="clickCheckBox(1)" />First checkbox</label>
-          <label for="two">
-            <input type="checkbox" id="two" (click)="clickCheckBox(2)" />Second checkbox</label>
-          <label for="three">
-            <input type="checkbox" id="three" (click)="clickCheckBox(3)" />Third checkbox</label>
-        </div>
-      </div>
-    </form>
-    <strong>Тип</strong>
-    <!-- radioButton -->
-    <div class="radioButtons">
-      
-        <div class="md-radio">
-          <input id="1" type="radio" name="g" checked>
-          <label for="1">Option 1</label>
-        </div>
-        <div class="md-radio">
-          <input id="2" type="radio" name="g">
-          <label for="2">Option 2</label>
-        </div>
-        <div class="md-radio">
-          <input id="3" type="radio" name="g">
-          <label for="3">Option 3</label>
-        </div>
-        <div class="md-radio">
-          <input id="4" type="radio" name="g">
-          <label for="4">Option 4</label>
-        </div>
-      
-    </div>
+    <side-bar id="mainSideBar">
 
-
-
-    </div>
-  </div>
+    </side-bar>
 
 
 

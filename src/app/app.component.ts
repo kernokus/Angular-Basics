@@ -1,5 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Subject, } from 'rxjs';
+
+import { QueryRef, gql } from 'apollo-angular';
+import {apolloQlService} from 'src/app/app.service'
+import { map } from 'rxjs/operators';
+import { throwServerError } from '@apollo/client/core';
+//import {InMemoryCache} from '@apollo/client'
 
 
 export interface Card {
@@ -8,6 +14,10 @@ export interface Card {
   type: String;
       
 }
+
+
+
+
 
 @Component({
   selector: 'app-root', 
@@ -19,83 +29,86 @@ export interface Card {
 
 
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,OnDestroy {
   inputText=""
-  i=1
-  isDisabledR=false
-  isDisabledL=true
-  expanded = false;
-  nums=new Set();
-  lenghtNums=0
-
-  tempArray:any[]=[{type:'type1345345345',name:'name1',home_port:'port1'},{type:'type2',name:'name2',home_port:'port2'},
-  {type:'type3',name:'name3',home_port:'port3'}]; //текущая страница
   
-  constructor(private apollo:Apollo){}
+  
+  
+ 
+  tempArray:any; //текущая страница
+  languageArray:any[]; //список языков
+
+
+  
+
+  
+  
+
+
+  
+  
+  constructor(public service: apolloQlService) {
+   
+  }
 
    ngOnInit() {
-    this.apollo
-      .watchQuery({
-        query: gql`
-        {
-          ships(limit: 5, offset: 0) {
-            home_port
-            name
-            type
-          }
-        }
-        `,
-      })
-      .valueChanges.subscribe((result: any) => {
-        this.tempArray=result.data.ships
-        console.log(result.data.ships)
-      });
-   }
+        this.service.feedQuery.valueChanges.subscribe(result =>{
+        console.log(result.data.Country)
+        this.tempArray=result.data.Country
+        
+        })
+   };
+
+   
+    // this.feedQuery.fetchMore({
+    //   variables:{
+    //     offset: this.i*5
+    //   }
+    // })
 
 
-
-    
-showCheckboxes():void {
-  console.log("show!!")
-  var checkboxes = document.getElementById("checkboxes");
-  if (!this.expanded) {
-    checkboxes.style.display = "block";
-    this.expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    this.expanded = false;
-  }
-  }
- 
-
-  clickCheckBox(id) {
-    if (this.nums.has(id)) {
-      this.nums.delete(id)
+   
+    ngOnDestroy(){
+      //this.service.feedQuery.valueChanges.unsubscribe()
+      //надо отписаться 
     }
-    else {
-      this.nums.add(id)
-    }
+
+
     
-    this.lenghtNums = this.nums.size
-    
-    console.log(this.nums)
-    //смотреть какие checkbox включены,а какие нет
-  }
+
   
   
   nextPage():void {
-    this.i++
-    this.isDisabledL=false
+    if (this.service.i!=4) {
+      this.service.i++
+      this.service.isDisabledL=false
+      
+      this.service.fetch()
+      
+      
+      if (this.service.i ==4) {
+        this.service.isDisabledR=true
+      }
+      
+    }
+    else {
+        this.service.isDisabledR=false
+    }
+    
   }
   
   prevPage():void {
-    if (this.i!==1) {
-      this.i--
-      if (this.i==1) {
-        this.isDisabledL=true
+    if (this.service.i!==1) {
+      this.service.isDisabledR=false
+      this.service.i--
+      
+      if (this.service.i==1) {
+        this.service.isDisabledL=true
+        this.service.fetch(0)
       }
       else {
-        this.isDisabledL=false
+        this.service.isDisabledL=false
+        this.service.fetch()
       }
     }
   }

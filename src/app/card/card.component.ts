@@ -6,13 +6,18 @@ import {Card} from '../app.component'
     styleUrls:['./card.component.scss']
 })
 export class CardComponent implements OnInit {
+    
+    
 
-    @Input() card : any
+    @Input() country : any
+    @Input() language : string
+    
 
-
-
+    
+    
+    
 
     ngOnInit(){
-        console.log("onInit")
+        console.log("onInitCard")
     }
 }

@@ -1,38 +1,37 @@
 .card {
     border-bottom:1px solid #A5A5A5;
     margin: 2% 4% ;
-    // top right bottom left
     
-
-    h1 {
-        margin:0 15px 0 0;
-        font-size: 15pt;
-    }
-
-    .port {
+    dl {
+        font-size: 12pt;
         display: flex;
-        position: absolute;
-        left: 450px;
-        
-    }
-    
-    .typeV {
-       
-        display: flex;
-        
+        margin-bottom: 25px;
+
+        dd {
+            color: #2962FF;
+            margin-left: 75px;
+        }
+
+        h1 {
+            margin:0 15px 0 0;
+            font-size: 15pt;
+            font-weight: 500;
+            line-height: 23px;
+        }
+
+        .port { //фиксированное положение 2-го блока в ряду
+            display: flex;
+            position: absolute;
+            left: 450px;
+            
+        }
+        .shipType {
+            display: flex;
+        }
     }
 
-    dd {
-        color: #2962FF;
-        margin-left: 75px;
+    svg {
+        padding-top: 4px; //выровнять стрелку
     }
-
-    
-    
-}
-dl {
-    font-size: 12pt;
-    display: flex;
-    margin-bottom: 25px;
     
 }
