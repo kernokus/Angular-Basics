@@ -3,7 +3,7 @@
       <h1>Фильтры</h1>
         <div class="container"> 
         <div class="material-form-field">
-          <input [(ngModel)]="inputText" [style.border-bottom-color]="inputText ? '#347CFF':'#A5A5A5'"  type="text" required name="text" id="field-text"/>
+          <input [(ngModel)]="this.service.inputText" [style.border-bottom-color]="this.service.inputText ? '#347CFF':'#A5A5A5'"  type="text" required name="text" id="field-text"/>
           <label class="material-form-field-label" for="field-text">Название</label>
         </div>
     </div>
@@ -12,7 +12,7 @@
   <form>
     <div class="multiselect">
       <div class="selectBox" (click)="showCheckboxes()">
-        <label id="multisetLabel" for="selectBox">Порт</label>
+        <label id="multisetLabel" for="selectBox">Основной язык</label>
         <select id="selectMulti" [style.border-bottom-color]="lenghtNums ? '#347CFF':'#A5A5A5'">
           <option id="numsChoosen">Выбраны {{lenghtNums}}</option>
         </select>
@@ -20,11 +20,11 @@
       </div>
       <div id="checkboxes">
         <label for="one">
-          <input type="checkbox" id="one" (click)="clickCheckBox(1)" />First checkbox</label>
+          <input type="checkbox" id="one" (click)="clickCheckBox('Russian')" />First checkbox</label>
         <label for="two">
-          <input type="checkbox" id="two" (click)="clickCheckBox(2)" />Second checkbox</label>
+          <input type="checkbox" id="two" (click)="clickCheckBox('English')" />Second checkbox</label>
         <label for="three">
-          <input type="checkbox" id="three" (click)="clickCheckBox(3)" />Third checkbox</label>
+          <input type="checkbox" id="three" (click)="clickCheckBox('French')" />Third checkbox</label>
       </div>
     </div>
   </form>

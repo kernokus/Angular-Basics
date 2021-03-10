@@ -1,27 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import {apolloQlService} from 'src/app/app.service'
 @Component({
   selector: 'side-bar',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent  {
+export class FormComponent implements OnInit  {
 
 	
 
 	//inputText
-	inputText=""
+	
 	//multisetCheckBoxes
 	expanded = false;
-	nums=new Set();
+	nums: Set<string>=new Set();
 	lenghtNums=0;
+	
 	//radioButtons
 	
 	
 
 
-	constructor(private service: apolloQlService) {
-   
+	constructor(public service: apolloQlService) {}
+
+
+	ngOnInit(){
+		const search = document.getElementById('field-text')
+		const stream$ = fromEvent(search,'input').pipe(
+			debounceTime(300) //что бы не отправлять лишние запросы
+		)
+		stream$.subscribe(value => {
+			this.service.i = 1
+			this.service.fetch(0)
+			this.service.isDisabledL=true
+		})
 	}
 
   showCheckboxes():void {
@@ -48,6 +62,28 @@ export class FormComponent  {
       this.lenghtNums = this.nums.size
       
       console.log(this.nums)
+
+	  	if (this.lenghtNums==0) {
+			this.service.isWithLang=false
+			this.service.feedQuery = this.service.getApolloWithoutLang()
+			this.service.feedQuery.valueChanges.subscribe(result =>{
+				console.log(result.data.Country)
+				this.service.tempArray=result.data.Country
+			})
+		}
+		else {
+			this.service.isWithLang=true
+			this.service.languageArray = [...this.nums]
+			this.service.feedQuery = this.service.getApolloWithLang()
+			this.service.feedQuery.valueChanges.subscribe(result =>{
+				console.log(result.data.Country)
+				this.service.tempArray=result.data.Country
+			})
+			
+		}
+	  	this.service.i = 1
+		this.service.fetch(0)
+		this.service.isDisabledL=true
       //смотреть какие checkbox включены,а какие нет
     }
   

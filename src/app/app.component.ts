@@ -35,7 +35,7 @@ export class AppComponent implements OnInit,OnDestroy {
   
   
  
-  tempArray:any; //текущая страница
+  
   languageArray:any[]; //список языков
 
 
@@ -52,11 +52,16 @@ export class AppComponent implements OnInit,OnDestroy {
   }
 
    ngOnInit() {
+
+        
+
         this.service.feedQuery.valueChanges.subscribe(result =>{
         console.log(result.data.Country)
-        this.tempArray=result.data.Country
-        
+        this.service.tempArray=result.data.Country
         })
+
+
+
    };
 
    
