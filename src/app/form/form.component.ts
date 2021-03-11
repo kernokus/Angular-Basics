@@ -117,6 +117,11 @@ export class FormComponent implements OnInit  {
 				  this.service.population_gte=0;
 				  break; 
 			}
+			case 6: { 
+				this.service.population_lte=13774221660;
+				this.service.population_gte=0;
+				break; 
+		  }
 			default: { 
 			break; 
 			} 
