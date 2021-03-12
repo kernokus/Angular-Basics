@@ -27,34 +27,16 @@ export interface Card {
 
 
 
-
-
 export class AppComponent implements OnInit,OnDestroy {
   inputText=""
-  
-  
-  
- 
-  
+
   languageArray:any[]; //список языков
-
-
-  
-
-  
-  
-
-
-  
-  
   constructor(public service: apolloQlService) {
    
   }
 
    ngOnInit() {
-
-        
-
+     
         this.service.feedQuery.valueChanges.subscribe(result =>{
         console.log(result.data.Country)
         this.service.tempArray=result.data.Country
