@@ -6,14 +6,16 @@ import {apolloQlService} from 'src/app/app.service'
 import { map } from 'rxjs/operators';
 import { throwServerError } from '@apollo/client/core';
 //import {InMemoryCache} from '@apollo/client'
-
-
+import {Country} from 'src/app/app.service'
+import * as cloneDeep from 'lodash/cloneDeep';
 export interface Card {
   home_port: String;
   name: String;
   type: String;
       
 }
+
+
 
 
 
@@ -28,7 +30,7 @@ export interface Card {
 
 
 export class AppComponent implements OnInit,OnDestroy {
-  inputText=""
+  
 
   languageArray:any[]; //список языков
   constructor(public service: apolloQlService) {
@@ -36,10 +38,56 @@ export class AppComponent implements OnInit,OnDestroy {
   }
 
    ngOnInit() {
-     
-        this.service.feedQuery.valueChanges.subscribe(result =>{
-        console.log(result.data.Country)
-        this.service.tempArray=result.data.Country
+        
+        this.service.feedQuery.valueChanges.subscribe(result => {
+
+
+
+        let dataSize:Country[] = cloneDeep(result.data.Country);
+        
+        //
+
+        
+
+
+        console.log(dataSize)
+        //;
+        //var copy = 
+        //console.log(dataSize)
+        let temp:number = dataSize.length
+        console.log(temp)
+        //console.log(this.service.no)
+        if (temp===0) {
+          this.service.isHaveDataFromApollo=false
+          this.service.isDisabledR=true
+          //отображаем что данных нет
+        }
+        else if (temp<5 && temp>0) {
+          
+          
+          this.service.isHaveDataFromApollo=true
+          //отображаем данные и дизейблим стрелку
+          this.service.tempArray=result.data.Country
+          this.service.isDisabledR=true
+        }
+        else if (temp===6) {
+          console.log("БЕЗ ЯЗЫКОВ НЕ ЗАХОДИТ?")
+          this.service.isHaveDataFromApollo=true
+          dataSize.pop()
+          this.service.tempArray=dataSize
+          this.service.isDisabledR=false
+        }
+        else if (temp===5) {
+          this.service.isHaveDataFromApollo=true
+          this.service.tempArray=dataSize
+          this.service.isDisabledR=true
+        }
+
+        
+        
+        
+         //console.log(result.data.Country)
+        // this.service.tempArray=result.data.Country
         })
 
 
@@ -60,28 +108,13 @@ export class AppComponent implements OnInit,OnDestroy {
       //надо отписаться 
     }
 
-
-    
-
-  
   
   nextPage():void {
-    if (this.service.i!=4) {
+    if (!this.service.isDisabledR) {
       this.service.i++
       this.service.isDisabledL=false
-      
       this.service.fetch()
-      
-      
-      if (this.service.i ==4) {
-        this.service.isDisabledR=true
-      }
-      
     }
-    else {
-        this.service.isDisabledR=false
-    }
-    
   }
   
   prevPage():void {

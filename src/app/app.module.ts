@@ -18,8 +18,10 @@ import {CardDetailsComponent} from 'src/app/card-details/card-details.component'
 import { RouterModule } from '@angular/router';
 import { RoutingComponent } from './routing/routing.component';
 
-
-
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+schemas: [
+  CUSTOM_ELEMENTS_SCHEMA
+]
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,8 @@ import { RoutingComponent } from './routing/routing.component';
     RouterModule.forRoot([{
       path: '',
       component: AppComponent
-  }, {
+  }, 
+  {
     path: 'card',
     //:name/:population
     component: CardDetailsComponent
@@ -51,6 +54,7 @@ import { RoutingComponent } from './routing/routing.component';
     
     
   }
+  ,
 ]),
     
   ],
@@ -69,6 +73,7 @@ import { RoutingComponent } from './routing/routing.component';
 
   },
 ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
 
   bootstrap: [RoutingComponent]
 })

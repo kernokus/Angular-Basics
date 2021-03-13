@@ -2,6 +2,7 @@
 #page {
 	height: 100vh;
 	display: flex;
+	
 }
 
 #content {
@@ -15,7 +16,7 @@
 #title {
 	margin-top: 50px; 
 	margin-left: 4%; 
-	margin-right: 4%;
+	margin-right: 4%; 
 	margin-bottom: 65px;
 	font-size: 21pt; //28px
 	line-height: 32px;
@@ -53,11 +54,13 @@ dl {
 }
 
 
+.noDataClass{
+	display: grid; //в качестве эксперимента
+  	place-items: center;
+	
+}
 
 
-
-
-//material design//////////////////////////////////////////////////////////
 
 
 

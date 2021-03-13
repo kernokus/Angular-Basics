@@ -17,12 +17,12 @@
         <div class="overSelect"></div>
       </div>
       <div id="checkboxes">
-        <label for="one">
-          <input type="checkbox" id="one" (click)="clickCheckBox('Russian')" />Русский язык</label>
-        <label for="two">
-          <input type="checkbox" id="two" (click)="clickCheckBox('English')" />Английский язык</label>
-        <label for="three">
-          <input type="checkbox" id="three" (click)="clickCheckBox('French')" />Французский язык</label>
+        <label for="RussianCheckBox">
+          <input type="checkbox" id="RussianCheckBox" (click)="clickCheckBox('Russian')" name="multiSelectInput" />Русский язык</label>
+        <label for="EnglishCheckBox">
+          <input type="checkbox" id="EnglishCheckBox" (click)="clickCheckBox('English')"name="multiSelectInput" />Английский язык</label>
+        <label for="FrenchCheckBox">
+          <input type="checkbox" id="FrenchCheckBox" (click)="clickCheckBox('French')" name="multiSelectInput"/>Французский язык</label>
           
       </div>
     
@@ -31,27 +31,27 @@
   <!-- radioButton -->
     <div class="radioButtons">
       <div class="md-radio">
-        <input id="1" (click)="clickRadioBtn(1)" type="radio" name="g" >
+        <input id="1" (click)="clickRadioBtn(1)" type="radio" name="rBtn" >
         <label for="1">Более 100 млн.чел</label>
       </div>
       <div class="md-radio">
-        <input id="2" (click)="clickRadioBtn(2)" type="radio" name="g">
+        <input id="2" (click)="clickRadioBtn(2)" type="radio" name="rBtn">
         <label for="2">30-100 млн.чел</label>
       </div>
       <div class="md-radio">
-        <input id="3" (click)="clickRadioBtn(3)" type="radio" name="g">
+        <input id="3" (click)="clickRadioBtn(3)" type="radio" name="rBtn">
         <label for="3">10-30 млн.чел</label>
       </div>
       <div class="md-radio">
-        <input id="4" (click)="clickRadioBtn(4)" type="radio" name="g">
+        <input id="4" (click)="clickRadioBtn(4)" type="radio" name="rBtn">
         <label for="4">1-10 млн.чел</label>
       </div>
       <div class="md-radio">
-        <input id="5" (click)="clickRadioBtn(5)" type="radio" name="g">
+        <input id="5" (click)="clickRadioBtn(5)" type="radio" name="rBtn">
         <label for="5">Менее 1 млн.чел</label>
       </div>
       <div class="md-radio">
-          <input id="6" (click)="clickRadioBtn(6)" type="radio" name="g">
+          <input id="6" (click)="clickRadioBtn(6)" type="radio" name="rBtn">
           <label for="6">Весь диапазон</label>
       </div>
     </div>

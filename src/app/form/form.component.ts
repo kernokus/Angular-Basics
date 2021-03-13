@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import {apolloQlService} from 'src/app/app.service'
+import {Country} from 'src/app/app.service'
+import * as cloneDeep from 'lodash/cloneDeep';
 @Component({
   selector: 'side-bar',
   templateUrl: './form.component.html',
@@ -15,7 +17,7 @@ export class FormComponent implements OnInit  {
 	
 	//multisetCheckBoxes
 	expanded = false;
-	nums: Set<string>=new Set();
+	
 	lenghtNums=0;
 	
 	//radioButtons
@@ -27,19 +29,47 @@ export class FormComponent implements OnInit  {
 
 
 	ngOnInit(){
+		//восстановление состояния sideBar при возврате с другой страницы
+		let radioButtons = document.getElementsByName('rBtn');
+		for (let i=0;i<radioButtons.length; i++) { //восстановление radioButtons
+			if (radioButtons[i].id==this.service.memberId+'') {
+				radioButtons[i].setAttribute('checked', 'checked');
+			}
+		}
+		//восстановление multiSelect
+
+		let inpMultiselect = document.getElementsByName('multiSelectInput');
+		for (let i=0;i<inpMultiselect.length; i++) { //восстановление radioButtons
+			if (this.service.nums.has(inpMultiselect[i].id.slice(0,-8))) {
+				console.log("hello")
+				inpMultiselect[i].setAttribute('checked', 'checked');
+			}
+		}
+		this.lenghtNums=this.service.nums.size
+
+
+
 		const search = document.getElementById('field-text')
 		const stream$ = fromEvent(search,'input').pipe(
 			debounceTime(300) //что бы не отправлять лишние запросы
 		)
 		stream$.subscribe(value => {
 			this.service.i = 1
+			
 			this.service.fetch(0)
 			this.service.isDisabledL=true
+			if (!this.service.isHaveDataFromApollo) {
+				this.service.isDisabledR=true
+			}
+			else {
+				this.service.isDisabledR=false
+			}
+			
 		})
 	}
 
   showCheckboxes():void {
-    console.log("show!!")
+    //console.log("show!!")
     var checkboxes = document.getElementById("checkboxes");
     if (!this.expanded) {
       checkboxes.style.display = "block";
@@ -51,44 +81,125 @@ export class FormComponent implements OnInit  {
     }
    
   
-    clickCheckBox(id) {
-      if (this.nums.has(id)) {
-        this.nums.delete(id)
+    clickCheckBox(id) { ////TODO ОТРЕФАКТОРИТЬ, ВЫНЕСТИ ОБЩУЮ ФУНКЦИЮ В СЕРВИС
+      if (this.service.nums.has(id)) {
+        this.service.nums.delete(id)
       }
       else {
-        this.nums.add(id)
+        this.service.nums.add(id)
       }
       
-      this.lenghtNums = this.nums.size
+      this.lenghtNums = this.service.nums.size
       
-      console.log(this.nums)
+      console.log(this.service.nums)
 
 	  	if (this.lenghtNums==0) {
 			this.service.isWithLang=false
 			this.service.feedQuery = this.service.getApolloWithoutLang()
 			this.service.feedQuery.valueChanges.subscribe(result =>{
 				console.log(result.data.Country)
-				this.service.tempArray=result.data.Country
+
+				let dataSize:Country[] = cloneDeep(result.data.Country);
+        
+        //
+
+        
+
+
+        console.log(dataSize)
+        //;
+        //var copy = 
+        //console.log(dataSize)
+        let temp:number = dataSize.length
+        console.log(temp)
+        //console.log(this.service.no)
+        if (temp===0) {
+          this.service.isHaveDataFromApollo=false
+          this.service.isDisabledR=true
+          //отображаем что данных нет
+        }
+        else if (temp<5 && temp>0) {
+          
+          
+          this.service.isHaveDataFromApollo=true
+          //отображаем данные и дизейблим стрелку
+          this.service.tempArray=result.data.Country
+          this.service.isDisabledR=true
+        }
+        else if (temp===6) {
+          console.log("БЕЗ ЯЗЫКОВ НЕ ЗАХОДИТ?")
+          this.service.isHaveDataFromApollo=true
+          dataSize.pop()
+          this.service.tempArray=dataSize
+          this.service.isDisabledR=false
+        }
+        else if (temp===5) {
+          this.service.isHaveDataFromApollo=true
+          this.service.tempArray=dataSize
+          this.service.isDisabledR=true
+        }
+				//this.service.tempArray=result.data.Country
 			})
 		}
 		else {
 			this.service.isWithLang=true
-			this.service.languageArray = [...this.nums]
+			this.service.languageArray = [...this.service.nums]
 			this.service.feedQuery = this.service.getApolloWithLang()
 			this.service.feedQuery.valueChanges.subscribe(result =>{
 				console.log(result.data.Country)
-				this.service.tempArray=result.data.Country
+
+				let dataSize:Country[] = cloneDeep(result.data.Country);
+        
+        //
+
+        
+
+
+        console.log(dataSize)
+        //;
+        //var copy = 
+        //console.log(dataSize)
+        let temp:number = dataSize.length
+        console.log(temp)
+        //console.log(this.service.no)
+        if (temp===0) {
+          this.service.isHaveDataFromApollo=false
+          this.service.isDisabledR=true
+          //отображаем что данных нет
+        }
+        else if (temp<5 && temp>0) {
+          
+          
+          this.service.isHaveDataFromApollo=true
+          //отображаем данные и дизейблим стрелку
+          this.service.tempArray=result.data.Country
+          this.service.isDisabledR=true
+        }
+        else if (temp===6) {
+          console.log("БЕЗ ЯЗЫКОВ НЕ ЗАХОДИТ?")
+          this.service.isHaveDataFromApollo=true
+          dataSize.pop()
+          this.service.tempArray=dataSize
+          this.service.isDisabledR=false
+        }
+        else if (temp===5) {
+          this.service.isHaveDataFromApollo=true
+          this.service.tempArray=dataSize
+          this.service.isDisabledR=true
+        }
+				//this.service.tempArray=result.data.Country
 			})
 			
 		}
 	  	this.service.i = 1
 		this.service.fetch(0)
 		this.service.isDisabledL=true
+		this.service.isDisabledR=false
       //смотреть какие checkbox включены,а какие нет
     }
   
 
-    clickRadioBtn(id) {
+    clickRadioBtn(id:number) {
 	if (id!=this.service.memberId) { //что бы не было запроса каждый раз по нажатию на один и тот же radioButton
 		
 		switch(id) { 
@@ -130,6 +241,7 @@ export class FormComponent implements OnInit  {
 			this.service.i = 1
 			this.service.fetch(0)
 			this.service.isDisabledL=true
+			this.service.isDisabledR=false
 	}
     }
 }

@@ -3,7 +3,7 @@ import { Apollo,gql,QueryRef } from 'apollo-angular';
 
 const countryWithoutLang = gql` 
 query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inputText:String!) {
-    Country(first:5,offset:$ofset,filter:{AND:[{AND:[{population_gte:$population_gte},{population_lte:$population_lte}]},{name_starts_with:$inputText}]}){
+    Country(first:6,offset:$ofset,filter:{AND:[{AND:[{population_gte:$population_gte},{population_lte:$population_lte}]},{name_starts_with:$inputText}]}){
       name
       population
       officialLanguages {
@@ -15,7 +15,7 @@ query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inp
 
 const countryWithLang = gql` 
 query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inputText:String!,$languageArray:[String!]) {
-    Country(first:5,offset:$ofset,filter:{AND:[{AND:[{population_gte:$population_gte},{population_lte:$population_lte}]},{AND:[{name_starts_with:$inputText},{officialLanguages:{name_in:$languageArray}}] }]}){
+    Country(first:6,offset:$ofset,filter:{AND:[{AND:[{population_gte:$population_gte},{population_lte:$population_lte}]},{AND:[{name_starts_with:$inputText},{officialLanguages:{name_in:$languageArray}}] }]}){
       name
       population
       officialLanguages {
@@ -24,19 +24,29 @@ query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inp
   }
 }
 `;
+export interface Country {
+  name: string;
+  population: number;
+  type: String;
+  officialLanguages:string[];   
+}
+
 
 @Injectable({ providedIn: 'root' })
 export class apolloQlService {
-    tempArray:any; //текущая страница
+
+    isHaveDataFromApollo=true;
+  
+    tempArray:Country[]; //текущая страница
     
     inputText="" //текст с input
 
-
+    nums: Set<string>=new Set();
     isWithLang=false
     isDisabledR=false
     isDisabledL=true
     i=1
-    memberId=0;
+    memberId:number=0;
     languageArray:string[]=[];
 
     feedQuery: QueryRef<any>;
@@ -51,7 +61,6 @@ export class apolloQlService {
     }
 
     getApolloWithoutLang() {
-    console.log(this.languageArray+"without")
     return this.apollo.watchQuery({
         query:countryWithoutLang,
           variables:{
@@ -64,7 +73,6 @@ export class apolloQlService {
     });
     }
     getApolloWithLang() {
-      console.log(this.languageArray+"withLang")
       return this.apollo.watchQuery({
           query:countryWithLang,
             variables:{
@@ -87,7 +95,7 @@ export class apolloQlService {
 
     fetch(ofset = this.i*5) {
         if (this.isWithLang===true) {
-          console.log("fetchWITHLang")
+          console.log("с языками")
           this.feedQuery.setVariables({
             ofset: ofset,
             population_gte:this.population_gte,
@@ -99,7 +107,7 @@ export class apolloQlService {
          )
         }
         else {
-          console.log("fetchWithoutLang") //без языков
+          console.log("без языков")
           this.feedQuery.setVariables({
             ofset: ofset,
             population_gte:this.population_gte,
