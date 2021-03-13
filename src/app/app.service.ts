@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo,gql,QueryRef } from 'apollo-angular';
+import * as cloneDeep from 'lodash/cloneDeep';
+
 
 const countryWithoutLang = gql` 
 query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inputText:String!) {
@@ -116,6 +118,36 @@ export class apolloQlService {
           }
          )
         }
-        
 }
+
+    analyzeResult(_countriesArray) {
+      let countriesArray:Country[] = cloneDeep(_countriesArray);
+      let temp:number = countriesArray.length
+    
+      if (temp!==0){
+        if (temp<5 && temp>0) {
+          this.isHaveDataFromApollo=true
+          //отображаем данные и дизейблим стрелку
+          this.tempArray=countriesArray
+          this.isDisabledR=true
+        }
+        else if (temp===6) {
+          this.isHaveDataFromApollo=true
+          countriesArray.pop()
+          this.tempArray=countriesArray
+          this.isDisabledR=false
+        }
+        else if (temp===5) {
+          this.isHaveDataFromApollo=true
+          this.tempArray=countriesArray
+          this.isDisabledR=true
+        }
+      }
+      else {
+          this.isHaveDataFromApollo=false
+          this.isDisabledR=true
+      }
+
+
+    }
 }

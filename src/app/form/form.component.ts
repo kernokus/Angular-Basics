@@ -97,105 +97,24 @@ export class FormComponent implements OnInit  {
 			this.service.isWithLang=false
 			this.service.feedQuery = this.service.getApolloWithoutLang()
 			this.service.feedQuery.valueChanges.subscribe(result =>{
-				console.log(result.data.Country)
 
-				let dataSize:Country[] = cloneDeep(result.data.Country);
-        
-        //
+			this.service.analyzeResult(result.data.Country)
 
-        
-
-
-        console.log(dataSize)
-        //;
-        //var copy = 
-        //console.log(dataSize)
-        let temp:number = dataSize.length
-        console.log(temp)
-        //console.log(this.service.no)
-        if (temp===0) {
-          this.service.isHaveDataFromApollo=false
-          this.service.isDisabledR=true
-          //отображаем что данных нет
-        }
-        else if (temp<5 && temp>0) {
-          
-          
-          this.service.isHaveDataFromApollo=true
-          //отображаем данные и дизейблим стрелку
-          this.service.tempArray=result.data.Country
-          this.service.isDisabledR=true
-        }
-        else if (temp===6) {
-          console.log("БЕЗ ЯЗЫКОВ НЕ ЗАХОДИТ?")
-          this.service.isHaveDataFromApollo=true
-          dataSize.pop()
-          this.service.tempArray=dataSize
-          this.service.isDisabledR=false
-        }
-        else if (temp===5) {
-          this.service.isHaveDataFromApollo=true
-          this.service.tempArray=dataSize
-          this.service.isDisabledR=true
-        }
-				//this.service.tempArray=result.data.Country
 			})
 		}
 		else {
 			this.service.isWithLang=true
 			this.service.languageArray = [...this.service.nums]
 			this.service.feedQuery = this.service.getApolloWithLang()
-			this.service.feedQuery.valueChanges.subscribe(result =>{
-				console.log(result.data.Country)
+			this.service.feedQuery.valueChanges.subscribe(result => {
 
-				let dataSize:Country[] = cloneDeep(result.data.Country);
-        
-        //
-
-        
-
-
-        console.log(dataSize)
-        //;
-        //var copy = 
-        //console.log(dataSize)
-        let temp:number = dataSize.length
-        console.log(temp)
-        //console.log(this.service.no)
-        if (temp===0) {
-          this.service.isHaveDataFromApollo=false
-          this.service.isDisabledR=true
-          //отображаем что данных нет
-        }
-        else if (temp<5 && temp>0) {
-          
-          
-          this.service.isHaveDataFromApollo=true
-          //отображаем данные и дизейблим стрелку
-          this.service.tempArray=result.data.Country
-          this.service.isDisabledR=true
-        }
-        else if (temp===6) {
-          console.log("БЕЗ ЯЗЫКОВ НЕ ЗАХОДИТ?")
-          this.service.isHaveDataFromApollo=true
-          dataSize.pop()
-          this.service.tempArray=dataSize
-          this.service.isDisabledR=false
-        }
-        else if (temp===5) {
-          this.service.isHaveDataFromApollo=true
-          this.service.tempArray=dataSize
-          this.service.isDisabledR=true
-        }
-				//this.service.tempArray=result.data.Country
+			this.service.analyzeResult(result.data.Country)
 			})
-			
 		}
 	  	this.service.i = 1
 		this.service.fetch(0)
 		this.service.isDisabledL=true
 		this.service.isDisabledR=false
-      //смотреть какие checkbox включены,а какие нет
     }
   
 

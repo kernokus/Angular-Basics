@@ -1,15 +1,12 @@
 $material-form-label: #000000;
-$material-form-label-focus: #3f51b5;
+$material-form-label-focus: #347CFF;
 $material-form-line: #000000;
 $material-form-line-focus: $material-form-label-focus;
 $material-form-input-text: $material-form-label;
 $material-form-input-text-focus: $material-form-label-focus;
 $material-form-field-invalid-foreground: #A5A5A5;
-
 $material-labelOffset: 25px;
 $material-textInputPaddingTopBottom: 5px;
-
-
 
 //титул компонента
 h1 {
@@ -19,13 +16,15 @@ h1 {
   font-size: 18pt;
   line-height: 32px;
   margin-top: 50px; 
+  margin-bottom: 20px;
 }
 
 .container {
-  width:315px;
+  width: 340px;
+  line-height: 18.75px;
 
   .radioButtons{
-    $md-radio-checked-color: rgb(51, 122, 183);
+  $md-radio-checked-color:#347CFF;
   $md-radio-border-color: rgba(0, 0, 0, 0.54);
   $md-radio-size: 20px;
   $md-radio-checked-size: 10px; 
@@ -107,7 +106,10 @@ h1 {
     display:block;
     color:#A5A5A5;
     caret-color:#347CFF;
+    
     padding:$material-labelOffset 0 10px 0;
+   
+
   
     &::after{
       content:"\00A0";
@@ -122,6 +124,7 @@ h1 {
       display:block;
       top: $material-labelOffset + $material-textInputPaddingTopBottom;
       left: 0px;
+      font-size: 12pt;
       transition:0.2s ease all; 
       -moz-transition:0.2s ease all; 
       -webkit-transition:0.2s ease all;
@@ -145,7 +148,7 @@ h1 {
       &:valid{
         & ~ .material-form-field-label{
           top: $material-labelOffset - ($material-textInputPaddingTopBottom)-5;
-          font-size:12px;
+          font-size:11pt;
         }
       }
       &:focus{
@@ -161,7 +164,7 @@ h1 {
   }
   
   form {
-    margin-bottom: 35px;
+    margin: 10px 0 20px;
 
     .selectBox select {
       width: 100%;
@@ -180,13 +183,14 @@ h1 {
 
       #multisetLabel {
         color:#A5A5A5;
-        font-size:12px;
+        font-size:11pt;
         padding: auto;
         
       }
 
       #selectMulti {
         border: none;
+        font-size: 12pt;
         border-bottom:1px solid #A5A5A5;
         appearance: none; //узнать
         -webkit-appearance: none;//почитать
@@ -199,31 +203,48 @@ h1 {
       border: 1px #dadada solid;
       input{
         margin-right: 10px;
+        
       }
-
+    
       input[type=checkbox] {
         position: relative;
         cursor: pointer;
+        margin-right: 30px;
+        //expirement - убирает стандартные рамки checkbox
+        -webkit-appearance: none;
+        appearance: none;
+        
+        
       }
       input[type=checkbox]:before {
         content: "";
         display: block;
         position: absolute;
         width: 20px;
+        //outline: 2px solid #DADADA;
+        border:1px solid #DADADA;
+        border-radius:15%;
         height: 20px;
-        top: 0;
+        top: -10px;
         left: 0;
-        background-color:#e9e9e9;
+        // background-color:#e9e9e9;
       }
       input[type=checkbox]:checked:before {
         content: "";
         display: block;
         position: absolute;
+        // outline: 2px solid #347CFF;
+        // border:14px solid red;
+        // border-radius:20%;
+
+        border:1px solid #347CFF;
+        border-radius:15%;
+
         width: 20px;
         height: 20px;
-        top: 0;
+        top: -10px;
         left: 0;
-        background-color:#1E80EF;
+        background-color:#347CFF;
       }
       input[type=checkbox]:checked:after {
         content: "";
@@ -236,8 +257,8 @@ h1 {
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
         position: absolute;
-        top: 2px;
-        left: 6px;
+        top: -7px;
+        left: 7px;
       }
     }
     #checkboxes label {

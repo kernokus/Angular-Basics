@@ -40,69 +40,10 @@ export class AppComponent implements OnInit,OnDestroy {
    ngOnInit() {
         
         this.service.feedQuery.valueChanges.subscribe(result => {
-
-
-
-        let dataSize:Country[] = cloneDeep(result.data.Country);
-        
-        //
-
-        
-
-
-        console.log(dataSize)
-        //;
-        //var copy = 
-        //console.log(dataSize)
-        let temp:number = dataSize.length
-        console.log(temp)
-        //console.log(this.service.no)
-        if (temp===0) {
-          this.service.isHaveDataFromApollo=false
-          this.service.isDisabledR=true
-          //отображаем что данных нет
-        }
-        else if (temp<5 && temp>0) {
-          
-          
-          this.service.isHaveDataFromApollo=true
-          //отображаем данные и дизейблим стрелку
-          this.service.tempArray=result.data.Country
-          this.service.isDisabledR=true
-        }
-        else if (temp===6) {
-          console.log("БЕЗ ЯЗЫКОВ НЕ ЗАХОДИТ?")
-          this.service.isHaveDataFromApollo=true
-          dataSize.pop()
-          this.service.tempArray=dataSize
-          this.service.isDisabledR=false
-        }
-        else if (temp===5) {
-          this.service.isHaveDataFromApollo=true
-          this.service.tempArray=dataSize
-          this.service.isDisabledR=true
-        }
-
-        
-        
-        
-         //console.log(result.data.Country)
-        // this.service.tempArray=result.data.Country
+        this.service.analyzeResult(result.data.Country)
         })
-
-
-
    };
 
-   
-    // this.feedQuery.fetchMore({
-    //   variables:{
-    //     offset: this.i*5
-    //   }
-    // })
-
-
-   
     ngOnDestroy(){
       //this.service.feedQuery.valueChanges.unsubscribe()
       //надо отписаться 
