@@ -6,6 +6,7 @@ import * as cloneDeep from 'lodash/cloneDeep';
 const countryWithoutLang = gql` 
 query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inputText:String!) {
     Country(first:6,offset:$ofset,filter:{AND:[{AND:[{population_gte:$population_gte},{population_lte:$population_lte}]},{name_starts_with:$inputText}]}){
+      _id
       name
       population
       officialLanguages {
@@ -18,6 +19,7 @@ query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inp
 const countryWithLang = gql` 
 query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inputText:String!,$languageArray:[String!]) {
     Country(first:6,offset:$ofset,filter:{AND:[{AND:[{population_gte:$population_gte},{population_lte:$population_lte}]},{AND:[{name_starts_with:$inputText},{officialLanguages:{name_in:$languageArray}}] }]}){
+      _id
       name
       population
       officialLanguages {
@@ -26,11 +28,42 @@ query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inp
   }
 }
 `;
+
+const getCardDetails = gql` 
+query getCountriesById($id:String!) {
+  Country(_id:$id) {
+    _id
+    name
+    alpha2Code
+    population
+    capital
+    officialLanguages {
+      name
+    }
+    alternativeSpellings {
+      name
+    }
+  }
+}
+`;
+
 export interface Country {
+  _id:string;
   name: string;
   population: number;
   type: String;
   officialLanguages:string[];   
+}
+
+export class CountryDetails implements Country {
+  _id:string;
+  name: string;
+  population: number;
+  type: String;
+  officialLanguages:string[];
+  capital:string;
+  alpha2Code:string;
+  alternativeSpellings:string[];
 }
 
 
@@ -85,8 +118,17 @@ export class apolloQlService {
               languageArray:this.languageArray
             }
       });
-      
       }
+
+      getApolloForCardDetails(_id:String) {
+        return this.apollo.watchQuery({
+          query:getCardDetails,
+            variables:{
+              id:_id
+            }
+         });
+      }
+      
 
     
 

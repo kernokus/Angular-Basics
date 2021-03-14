@@ -42,10 +42,15 @@ schemas: [
     CommonModule,
     RouterModule.forRoot([{
       path: '',
-      component: AppComponent
+      component: AppComponent,
+      pathMatch: 'full'
+      // children:[
+        
+      // ]
+      
   }, 
   {
-    path: 'card',
+    path: 'card/:id',
     //:name/:population
     component: CardDetailsComponent
     

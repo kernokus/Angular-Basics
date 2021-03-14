@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import {Card} from '../app.component'
+import {Country} from 'src/app/app.service'
 @Component({
     selector:'app-card',
     templateUrl:'./card.component.html',
@@ -10,19 +10,25 @@ export class CardComponent implements OnInit {
     
     
 
-    @Input() country : any
+    @Input() country : Country
     @Input() language : string
     
 
-    constructor(private router:Router){}
+    constructor(private router:Router){
+        
+    }
     
     
 
     ngOnInit(){
+        
     }
 
 
     openCardDetails() {
-        this.router.navigate(['card'])
+        //console.log("до перехода"+this.country._id)
+        this.router.navigate(['/card',this.country._id])
+        
+        //переход с параметрами
     }
 }

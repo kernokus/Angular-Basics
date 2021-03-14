@@ -1,0 +1,59 @@
+
+
+body {
+    height: 100vh;
+    margin: 50px 4% 65px;
+    .returnBtn{
+       cursor: pointer;
+       max-width: 100px;
+       max-height: 25px;
+    }
+    dl {
+        margin-top: 50px;
+        margin-bottom: 8px;
+        display: flex;
+        h1 {
+            font-size: 14px;
+            color: #2962FF;
+            padding-left: 20px;
+            font-weight: 400;
+        }
+
+        #returnToList {
+           padding-top: 12px;
+        }
+        
+        .languages,.alpha2Code { //фиксированное положение 2-го блока в ряду
+            display: flex;
+            position: absolute;
+            left :550px;
+            
+            
+        }
+        .population,.capital {
+            display: flex;
+            
+        }
+        dd {
+            color: #2962FF;
+            position: absolute;
+            left: 200px;
+        }
+    
+    }
+
+    #title {
+        font-size: 21pt;
+        font-weight: 500;
+    }    
+
+    #longContent{
+        max-width: 700px;
+        color: #2962FF;
+        
+    }
+   
+    }
+   
+
+
