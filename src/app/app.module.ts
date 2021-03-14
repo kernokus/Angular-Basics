@@ -7,7 +7,6 @@ import { FormComponent } from './form/form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import { GraphQLModule } from './graphql.module';
-//for apollo
 import {HttpClientModule} from '@angular/common/http';
 import {APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
@@ -17,11 +16,7 @@ import { LanguagePipe }  from 'src/app/language.pipe'
 import {CardDetailsComponent} from 'src/app/card-details/card-details.component'
 import { RouterModule } from '@angular/router';
 import { RoutingComponent } from './routing/routing.component';
-
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-schemas: [
-  CUSTOM_ELEMENTS_SCHEMA
-]
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,23 +40,13 @@ schemas: [
       component: AppComponent,
       pathMatch: 'full'
       // children:[
-        
       // ]
-      
   }, 
   {
     path: 'card/:id',
-    //:name/:population
     component: CardDetailsComponent
-    
-    
-   
-    
-    
   }
-  ,
 ]),
-    
   ],
   providers: [{
     provide: APOLLO_OPTIONS,
@@ -79,7 +64,6 @@ schemas: [
   },
 ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-
   bootstrap: [RoutingComponent]
 })
-export class AppModule { }
+export class AppModule {}

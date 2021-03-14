@@ -15,7 +15,6 @@ query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inp
   }
 }
 `;
-
 const countryWithLang = gql` 
 query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inputText:String!,$languageArray:[String!]) {
     Country(first:6,offset:$ofset,filter:{AND:[{AND:[{population_gte:$population_gte},{population_lte:$population_lte}]},{AND:[{name_starts_with:$inputText},{officialLanguages:{name_in:$languageArray}}] }]}){
@@ -28,7 +27,6 @@ query getCountry ($ofset:Int!,$population_gte:Float!,$population_lte:Float!,$inp
   }
 }
 `;
-
 const getCardDetails = gql` 
 query getCountriesById($id:String!) {
   Country(_id:$id) {
@@ -47,7 +45,7 @@ query getCountriesById($id:String!) {
 }
 `;
 
-export interface Country {
+export interface Country { 
   _id:string;
   name: string;
   population: number;
@@ -55,7 +53,7 @@ export interface Country {
   officialLanguages:string[];   
 }
 
-export class CountryDetails implements Country {
+export class CountryDetails implements Country { 
   _id:string;
   name: string;
   population: number;
@@ -66,7 +64,6 @@ export class CountryDetails implements Country {
   alternativeSpellings:string[];
 }
 
-
 @Injectable({ providedIn: 'root' })
 export class apolloQlService {
 
@@ -75,7 +72,7 @@ export class apolloQlService {
     tempArray:Country[]; //текущая страница
     
     inputText="" //текст с input
-
+    lenghtNums=0;
     nums: Set<string>=new Set();
     isWithLang=false
     isDisabledR=false
@@ -95,9 +92,13 @@ export class apolloQlService {
     this.feedQuery=this.getApolloWithoutLang()
     }
 
+
+    /* getApollo... функции возвращают один из 3 клиентов Apollo в зависимости от параметров 
+    системы фильтрации и структуры запроса
+    */
     getApolloWithoutLang() {
     return this.apollo.watchQuery({
-        query:countryWithoutLang,
+          query:countryWithoutLang,
           variables:{
             ofset:0,
             population_gte:0,
@@ -109,7 +110,7 @@ export class apolloQlService {
     }
     getApolloWithLang() {
       return this.apollo.watchQuery({
-          query:countryWithLang,
+            query:countryWithLang,
             variables:{
               ofset:0,
               population_gte:0,
@@ -119,7 +120,6 @@ export class apolloQlService {
             }
       });
       }
-
       getApolloForCardDetails(_id:String) {
         return this.apollo.watchQuery({
           query:getCardDetails,
@@ -128,58 +128,56 @@ export class apolloQlService {
             }
          });
       }
-      
 
-    
-
-
-
-
-
-
-    fetch(ofset = this.i*5) {
-        if (this.isWithLang===true) {
-          console.log("с языками")
-          this.feedQuery.setVariables({
+    fetch(_ofset = this.i*5) {
+        let ofset = _ofset-5 //тк i=1 соответствует ofset = 0, 2 - ofset=5 и тд.
+        /* установка переменных запроса и получение новых данных(в subscribe)
+        */
+        if (this.isWithLang===true) { //запрос с фильтрами языков
+            this.feedQuery.setVariables({
             ofset: ofset,
             population_gte:this.population_gte,
             population_lte:this.population_lte,
             inputText:this.inputText,
             languageArray:this.languageArray
 
-          }
-         )
+          })
         }
         else {
-          console.log("без языков")
-          this.feedQuery.setVariables({
+            this.feedQuery.setVariables({
             ofset: ofset,
             population_gte:this.population_gte,
             population_lte:this.population_lte,
             inputText:this.inputText
-          }
-         )
+          })
         }
-}
+    }
 
-    analyzeResult(_countriesArray) {
-      let countriesArray:Country[] = cloneDeep(_countriesArray);
-      let temp:number = countriesArray.length
-    
-      if (temp!==0){
-        if (temp<5 && temp>0) {
+
+    analyzeResult(_countriesArray:any) {
+      /* Необходим механизм отслеживания конца данных(API проекта не предоставляет общее количество сущностей)
+      Берём 6 элементов по запросу и помещаем в массив.
+      Если в массиве данных больше 6 элементов, то 5 поступают на экран и переход на след.экран не блокируется
+      , если 5 - поступают на экран, но переход на следующую страницу блокируется(так как 6 элемента нет). 
+      Меньше 4 элементов - показываем данные и не блокируем.
+      */
+      let countriesArray:Country[] = cloneDeep(_countriesArray);//глубокая копия
+      let lengthDataArr:number = countriesArray.length
+      if (lengthDataArr!==0){
+        if (lengthDataArr<5 && lengthDataArr>0) {
           this.isHaveDataFromApollo=true
-          //отображаем данные и дизейблим стрелку
+          //отображаем данные и запрещаем переход к след.странице
           this.tempArray=countriesArray
           this.isDisabledR=true
         }
-        else if (temp===6) {
+        else if (lengthDataArr===6) {
           this.isHaveDataFromApollo=true
           countriesArray.pop()
           this.tempArray=countriesArray
           this.isDisabledR=false
         }
-        else if (temp===5) {
+        
+        else if (lengthDataArr===5) {
           this.isHaveDataFromApollo=true
           this.tempArray=countriesArray
           this.isDisabledR=true
@@ -189,7 +187,5 @@ export class apolloQlService {
           this.isHaveDataFromApollo=false
           this.isDisabledR=true
       }
-
-
     }
 }

@@ -11,8 +11,8 @@
   <form>
       <div class="selectBox" (click)="showCheckboxes()">
         <label id="multisetLabel" for="selectBox">Основной язык</label>
-        <select id="selectMulti" [style.border-bottom-color]="lenghtNums ? '#347CFF':'#A5A5A5'">
-          <option>Выбраны {{lenghtNums}}</option>
+        <select id="selectMulti" [style.border-bottom-color]="this.service.lenghtNums ? '#347CFF':'#A5A5A5'">
+          <option>Выбраны {{this.service.lenghtNums}}</option>
         </select>
         <div class="overSelect"></div>
       </div>

@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnDestroy, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {Router} from  '@angular/router';
 import {apolloQlService} from 'src/app/app.service'
 import {CountryDetails} from  'src/app/app.service'
-import { Apollo,gql,QueryRef } from 'apollo-angular';
+import {QueryRef} from 'apollo-angular';
 @Component({
   selector: 'app-card-details',
   templateUrl: './card-details.component.html',
@@ -13,36 +13,20 @@ export class CardDetailsComponent implements OnInit,OnDestroy {
   currCountryDetails:CountryDetails;
   feedQuery: QueryRef<any>;
 
-  constructor(private route: ActivatedRoute,private router:Router,private service: apolloQlService) {
-    
-  }
+  constructor(private route: ActivatedRoute,private router:Router,private service: apolloQlService) {}
 
   ngOnInit(): void {
-  
-    const id:string=this.route.snapshot.params['id'];
-    
-    console.log(id)
-    this.feedQuery=this.service.getApolloForCardDetails(id)
-    
+    const id:string=this.route.snapshot.params['id']; //id из параметров перехода
+    this.feedQuery=this.service.getApolloForCardDetails(id) //устанавливаем параметр для необходимого запроса
     this.feedQuery.valueChanges.subscribe(result=> {
-    this.currCountryDetails=result.data.Country[0] //так как только 1 элемент
+    this.currCountryDetails=result.data.Country[0] //отображение данных
     })
     
-    
-
-
-
-
-
-
   }
   ngOnDestroy(): void {
-
     
   }
-
-  returnBtn(){
+  returnBtn(): void { //переход на главную страницу
     this.router.navigate([''])
   }
-
 }

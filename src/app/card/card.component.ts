@@ -6,29 +6,12 @@ import {Country} from 'src/app/app.service'
     templateUrl:'./card.component.html',
     styleUrls:['./card.component.scss']
 })
-export class CardComponent implements OnInit {
-    
-    
-
+export class CardComponent  {
     @Input() country : Country
     @Input() language : string
+    constructor(private router:Router){}
     
-
-    constructor(private router:Router){
-        
-    }
-    
-    
-
-    ngOnInit(){
-        
-    }
-
-
-    openCardDetails() {
-        //console.log("до перехода"+this.country._id)
+    openCardDetails():void { //переход к расширенной информации об элементе
         this.router.navigate(['/card',this.country._id])
-        
-        //переход с параметрами
     }
 }

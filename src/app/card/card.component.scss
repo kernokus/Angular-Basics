@@ -14,17 +14,10 @@
         font-size: 12pt;
         display: flex;
         
-
         dd {
             color: #2962FF;
             margin-left: 75px;
         }
-
-        dt {
-            
-            
-        }
-
         h1 {
             margin:0 20px 0 0;
             font-size: 15pt;
@@ -32,23 +25,21 @@
             line-height: 23px;
         }
 
-        .port { //фиксированное положение 2-го блока в ряду
+        .languages { //фиксированное положение 2-го блока в ряду
             display: flex;
             position: absolute;
             left: 500px;
             
             
         }
-        .shipType {
+        .population {
             display: flex;
             
         }
     }
-
     svg {
         padding-top: 4px; //выровнять стрелку
     }
-    
     #cardContent{
         margin-top: 25px;
         margin-bottom: 32px;

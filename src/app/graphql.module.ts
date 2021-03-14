@@ -3,7 +3,6 @@ import {APOLLO_OPTIONS} from 'apollo-angular';
 import {ApolloClientOptions, InMemoryCache} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
 import { offsetLimitPagination } from "@apollo/client/utilities";
-//const uri = 'https://api.spacex.land/graphql/'; // <-- add the URL of the GraphQL server here
 
 const uri="https://countries-274616.ew.r.appspot.com/"
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
@@ -16,7 +15,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
             feed: {
               ...offsetLimitPagination(),
               read(existing, { args }) {
-                // Implement here
+                
               }
             }
           }

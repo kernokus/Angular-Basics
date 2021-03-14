@@ -10,10 +10,7 @@
           [language]="item.officialLanguages|objInLanguage"> 
          </app-card>
       </div>
-
-     
       <ng-template #noData><label class='noDataClass'>По вашему запросу ничего не нашлось</label></ng-template>
-          
       <dl>
           <svg id="arrowL" (click)="prevPage()"[style.cursor]="this.service.isDisabledL ? 'default':'pointer'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path [style.fill]="this.service.isDisabledL ? '#3C474C':'#347CFF' "fill-rule="evenodd" clip-rule="evenodd" d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z" fill="#3C474C"/>
@@ -23,10 +20,8 @@
             <path [style.fill]="this.service.isDisabledR ? '#3C474C':'#347CFF' "fill-rule="evenodd" clip-rule="evenodd" d="M8.59 16.59L10 18L16 12L10 6L8.59 7.41L13.17 12L8.59 16.59Z" fill="#347CFF"/>
           </svg>
       </dl>
-    
     </div>
     <side-bar id="mainSideBar">
-
     </side-bar>
   </div>
 
