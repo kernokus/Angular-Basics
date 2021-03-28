@@ -1,10 +1,9 @@
 #Angular-Basics
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
 
 ## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.   
-   Angular project + TS + graphQL + Apollo.
-
+Angular project + TS + graphQL + Apollo.
+Пагинация данных + фильтрация через сайдбар.
+28.03 - по неизвестной пока что причине перестала работать фильтрация , хотя изменения не вносились
 
 
